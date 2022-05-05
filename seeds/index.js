@@ -37,8 +37,13 @@ const blogs = [
 const feedMe = async ()=>{
     try{
         await sequelize.sync({force:true})
+<<<<<<< HEAD
         await User.bulkCreate(users, {
             individualHooks: true
+=======
+        await User.bulkCreate(users,{
+            individualHooks:true
+>>>>>>> 0611e61536a7ba4760ef6f41e4e9f5a026bafae1
         });
         await Blog.bulkCreate(blogs);
         process.exit(0);
