@@ -5,7 +5,9 @@ const {User,Blog} = require("../models/");
 
 //find all
 router.get("/", (req, res) => {
-  User.findAll({})
+  User.findAll({
+    include:[Blog]
+  })
     .then(dbUsers => {
       res.json(dbUsers);
     })

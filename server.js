@@ -1,6 +1,6 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
-// const allRoutes = require('./controllers');
+const allRoutes = require('./controllers');
 
 const sequelize = require('./config/connection');
 
@@ -22,7 +22,7 @@ app.use(express.json());
 // app.engine('handlebars', hbs.engine);
 // app.set('view engine', 'handlebars');
 
-// app.use('/',allRoutes);
+app.use('/',allRoutes);
 
 sequelize.sync({ force: false }).then(function() {
     app.listen(PORT, function() {

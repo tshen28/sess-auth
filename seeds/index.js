@@ -30,13 +30,12 @@ const blogs = [
     {
         title:"Cats: a review",
         body:"I love cats I love every kind of cat.  I want to hug all them but you cant. Cant hug every cat......Cant hug every cat. ",
-        UserId:1
+        UserId:2
     }
 ]
 
 const feedMe = async ()=>{
     try{
-
         await sequelize.sync({force:true})
         await User.bulkCreate(users);
         await Blog.bulkCreate(blogs);
