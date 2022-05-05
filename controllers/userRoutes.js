@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const {User,Blog} = require("../models/");
-
+const bcrypt  = require("bcrypt");
 
 //find all
 router.get("/", (req, res) => {
@@ -32,9 +32,36 @@ router.get("/:id", (req, res) => {
 router.post("/", (req, res) => {
   User.create(req.body)
     .then(newUser => {
+      req.session.user = {
+        id:newUser.id,
+        username:newUser.username
+      }
       res.json(newUser);
     })
     .catch(err => {
+      console.log(err);
+      res.status(500).json({ msg: "an error occured", err });
+    });
+});
+router.post("/login", (req, res) => {
+  User.findOne({
+    where:{
+    username:req.body.username
+  }
+}).then(foundUser=>{
+    if(!foundUser){
+      return res.status(400).json({msg:"wrong login credentials"})
+    }
+    if(bcrypt.compareSync(req.body.password,foundUser.password)){
+      req.session.user = {
+        id:foundUser.id,
+        username:foundUser.username
+      }
+      return res.json(foundUser)
+    } else {
+      return res.status(400).json({msg:"wrong login credentials"})
+    }
+  }).catch(err => {
       console.log(err);
       res.status(500).json({ msg: "an error occured", err });
     });
