@@ -28,10 +28,13 @@ router.get("/:id", (req, res) => {
 
 //create Blog
 router.post("/", (req, res) => {
+  if(!req.session.user){
+    return res.status(401).json({msg:"ya gotta login to create a blog post!"})
+}
   Blog.create({
     title:req.body.title,
     body:req.body.body,
-    UserId:req.body.UserId
+    UserId:req.session.user.id
   })
     .then(newBlog => {
       res.json(newBlog);
