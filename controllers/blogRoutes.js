@@ -28,7 +28,11 @@ router.get("/:id", (req, res) => {
 
 //create Blog
 router.post("/", (req, res) => {
-  Blog.create(req.body)
+  Blog.create({
+    title:req.body.title,
+    body:req.body.body,
+    UserId:req.body.UserId
+  })
     .then(newBlog => {
       res.json(newBlog);
     })
